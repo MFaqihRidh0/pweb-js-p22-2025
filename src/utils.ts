@@ -1,0 +1,4 @@
+export function debounce<T extends (...args:any[])=>void>(fn:T, delay=300){ let t:number|undefined; return (...args:Parameters<T>)=>{ if(t) window.clearTimeout(t); t = window.setTimeout(()=>fn(...args), delay); }; }
+export function renderStars(r:number){ const full=Math.floor(r); const half=r-full>=0.5; let s=""; for(let i=0;i<full;i++) s+="★"; if(half) s+="★"; while(s.length<5) s+="☆"; return s.split("").map(ch=>`<span class="${ch==="★"?"on":"off"}">${ch}</span>`).join(""); }
+export function clamp(n:number,min:number,max:number){ return Math.max(min, Math.min(max,n)); }
+export function el<K extends keyof HTMLElementTagNameMap>(tag:K, attrs:Record<string,any>={}, html=""):HTMLElementTagNameMap[K]{ const e=document.createElement(tag); for(const [k,v] of Object.entries(attrs)){ if(k==="class")(e as any).className=v; else if(k.startsWith("data-")) e.setAttribute(k,v); else (e as any)[k]=v; } if(html) e.innerHTML=html; return e; }
